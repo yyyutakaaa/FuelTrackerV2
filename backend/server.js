@@ -92,11 +92,13 @@ async function scrapeFuelPrices() {
             // Generate prices for different stations with slight variations
             Object.entries(cityCoordinates).forEach(([city, coords]) => {
               const variation = (Math.random() - 0.5) * 0.1; // ±0.05€ variation
+              const basePrice = price + variation;
+              const discountedPrice = +(basePrice * 0.92).toFixed(3); // 8% discount
               prices.push({
                 id: `${city}-${standardizedFuelType}`.toLowerCase(),
                 stationName: `${city} Station`,
                 fuelType: standardizedFuelType,
-                price: +(price + variation).toFixed(3),
+                price: discountedPrice,
                 lat: coords.lat,
                 lng: coords.lng,
                 updatedAt: new Date().toISOString()
